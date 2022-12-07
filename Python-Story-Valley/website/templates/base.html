@@ -29,7 +29,14 @@
   <nav style="background-color: #FBFBFB;" class="navbar navbar-expand-lg navbar-dark  fixed-top">
     <div class="container">
       
-          <a class="logo" href="http://webdev.edinburghcollege.ac.uk/~HNDWEBMR9/Story-Valley-Website/index.php"><img src="http://webdev.edinburghcollege.ac.uk/~HNDWEBMR9/Story-Valley-Website/img/Story-Valley-Colour-Logo.png" alt="Profile Image" width="100" height="50"></a>
+          <a class="logo" href="./home"><img src="http://webdev.edinburghcollege.ac.uk/~HNDWEBMR9/Story-Valley-Website/img/Story-Valley-Colour-Logo.png" alt="Profile Image" width="100" height="50"></a>
+          {%if "Student"in session:%} 
+            <h4>Student is logged in</h4>
+          {%elif "Teacher" in session:%}
+            <h4>Teacher is logged in</h4>
+          {%elif "Admin" in session%}
+            <h4>Admin is logged in</h4>
+          {%endif%}  
 
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -53,10 +60,11 @@
                   <a class="nav-link" href="#footer">Contact</a>
                 </li>
                 <li class="nav-item">
-                  {%if "Teacher" in session:%}
-                    <a class='nav-link' href='http://webdev.edinburghcollege.ac.uk/~HNDWEBMR9/Story-Valley-Website/php/php.includes/inc.logout.php'>Logout</a>
-                  {%endif%}
+                  {%if "Teacher" or "Student" or "Admin" in session:%} 
+                    <a class='nav-link' name="logoutButton" href='./login'>Logout</a>            
+                  {% else %}
                     <a class='nav-link' href='./login'>Login / Register</a>
+                  {%endif%}
                 </li>
             </ul>
           </div>

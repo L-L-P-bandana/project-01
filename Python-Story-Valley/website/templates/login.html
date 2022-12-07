@@ -12,24 +12,22 @@
             <div class="login-box">
                 <div class="login-snip"> <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Login</label> <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
                     <div class="login-space">
-                        <form action="../static/loginCheker.py" method="POST" class="login">
-                            <div class="group"> <label for="user" class="label">Username</label> <input name="Username" id="Username" type="text"         class="input"                      placeholder="Enter your username"> </div>
-                            <div class="group"> <label for="pass" class="label">Password</label> <input name="Password" id="Password" type="password"     class="input" data-type="password" placeholder="Enter your password"> </div>
+                        <form method="POST" class="login" action="{{ url_for('auth.login')}}">
+                            <div class="group"> <label for="user" class="label">Username</label> <input name="name" id="Username" type="text" class="input" placeholder="Enter your username"> </div>
+                            <div class="group"> <label for="pass" class="label">Password</label> <input name="password" id="Password" type="password" class="input" data-type="password" placeholder="Enter your password"> </div>
                             <div class="group"> <input id="check" type="checkbox" class="check" checked> <label class="checkbox" for="check"><span class="icon"></span> Keep me Signed in</label> </div>
-                            <div class="group"> <input type="submit" class="button" value="Sign In"> </div>
+                            <div class="group"> <input name="loginForm" type="submit" class="button" value="login"> </div>
                             <div class="hr"></div>
                             <div class="foot"> <a href="#">Forgot Password?</a> </div>
                         </form>
-                        <form action="http://webdev.edinburghcollege.ac.uk/~HNDWEBMR9/Story-Valley-Website/php/php.includes/inc.signup.php" method="POST" class="sign-up-form">
-                            <div class="group"> <label for="user" class="label">Username       </label> <input name="Username" id="user" type="text"      class="input" placeholder="Create your Username" required="required"> </div>
-                            <div class="group"> <label for="pass" class="label">Password       </label> <input name="Password" id="pass" type="password"  class="input" data-type="password" placeholder="Create your password" required="required"> </div>
-                            <div class="group"> <label for="pass" class="label">Email Address  </label> <input name="E_Mail"   id="pass" type="text"      class="input" placeholder="Enter your email address" required="required"> </div>
-                            <div class="group"> <label for="pass" class="label">DOB            </label> <input name="DOB"      id="pass" type="date"      class="input" placeholder="Select your date Of birth" required="required"> </div>
-                            <div class="group"> <label for="user" class="label">Account Type   </label> 
-                            <input type="radio" id="student" name="Account" value="0">   <label for="student">Student</label> <br> 
-                            <input type="radio" id="teacher" name="Account" value="1">   <label for="teacher">Teacher</label> <br> <br>
+                        <form method="POST" class="sign-up-form" action="{{ url_for('auth.login')}}">
+                            <div class="group"> <label for="user" class="label">Username       </label> <input name="name" id="user" type="text"      class="input" placeholder="Create your Username" required="required"> </div>
+                            <div class="group"> <label for="pass" class="label">Password       </label> <input name="password" id="pass" type="password"  class="input" data-type="password" placeholder="Create your password" required="required"> </div>
+                            <div class="group"> <label for="pass" class="label">Email Address  </label> <input name="email"   id="pass" type="text"      class="input" placeholder="Enter your email address" required="required"> </div>                            <div class="group"> <label for="user" class="label">Account Type   </label> 
+                            <input type="radio" id="student" name="account" value="0">   <label for="student">Student</label> <br> 
+                            <input type="radio" id="teacher" name="account" value="1">   <label for="teacher">Teacher</label> <br> <br>
                             
-                            <div class="group"> <input type="submit" class="button" value="Sign Up"> </div>
+                            <div class="group"> <input name="registerForm"type="submit" class="button" value="register"> </div>
                             
                             <div class="hr"></div>
                             <div class="foot"> <label for="tab-1">Already A Member?</label> </div>
