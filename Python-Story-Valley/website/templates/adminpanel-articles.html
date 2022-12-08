@@ -1,0 +1,37 @@
+{% extends "adminbase.html" %} {% block title %}AP - Articles{% endblock %}
+
+
+{%block content%}
+
+<section>
+    <table border=1>
+    <tr>
+    <th>Article_Name</th>
+    <th>Category</th>
+    <th>Details</th>
+    <th>Cover Url</th>
+    </tr>
+    
+    <form action="{{ url_for('auth.articleadd')}}" method='POST' enctype='multipart/form-data'>
+    <tr>
+    <td><input type='text' name='name' value ='' placeholder='Name your Article'>  </td>
+    <td>  
+    <select name='category'>
+      <option value='Scottish'>    Scottish     </option>
+      <option value='English'>     English      </option>
+      <option value='French'>      French       </option>
+    </select>
+    </td>
+    <td><textarea              name='details'      value ='' placeholder='Place your Text Here' ncols='32' rows='2'></textarea> </td>
+    <td><input type='text'     name='coverurl'    value ='' placeholder='Add your Cover Url'></td>
+    <td><input type='submit'   name='addarticle' id='panel-button'  value ='Add'>  </td>
+    </form>
+    </tr>
+    
+    </table>
+    
+    </section>
+
+
+
+{%endblock%}

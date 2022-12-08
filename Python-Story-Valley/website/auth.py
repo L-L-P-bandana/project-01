@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, session
+from flask import Blueprint, flash, redirect, render_template, request, session, url_for
 import sqlite3
 from sqlite3 import connect
 
@@ -49,6 +49,7 @@ def login():
             c.execute(loginStudentQuery)
             user = request.form["loginForm"]
             session["Student"] = user
+            return render_template("home.html")
         
         elif len(resultsQueryTeacher) == 1:
             print("login query found a teacher user called '"+name+"")
@@ -64,10 +65,7 @@ def login():
             c.execute(loginStudentQuery)
             user = request.form["loginForm"]
             session["Admin"] = user
-            
-        elif "logoutButton" in request.GET:
-            print("session deleted")
-            
+            return render_template("adminpanel-users.html")
         else:
             print("login query did not find the user")
         
@@ -86,8 +84,81 @@ def login():
         createUser = conn.execute("""INSERT INTO users(name,password,email,account)VALUES (?,?,?,?)""",(name, password, email, account,)) 
         conn.commit()
         return createUser
-        #if len(existingUserSearchQuery) < 1:
-        
     return render_template("login.html") 
 
+@auth.route('/logout')
+def logout():
+    session.pop("Student", None)
+    session.pop("Teacher", None)
+    session.pop("Admin", None)
+    return render_template("login.html") 
 
+@auth.route('/categories')
+def categories():
+    return render_template("categories.html") 
+
+@auth.route('/articleuploader')
+def articleuploader():
+    if "Teacher" in session:        
+        database = './website/sqlitedb.db'
+        conn = connect(database)
+        return render_template("articleuploader.html")     
+    else:
+        return render_template("login.html") 
+    
+@auth.route('/articleadd', methods=['GET','POST'])
+def articleadd():
+    if "Teacher" in session or "Admin" in session:        
+        database = './website/sqlitedb.db'
+        conn = connect(database)
+        
+        if request.form.get('addarticle') is not None:
+            name = request.form.get("name)")
+            category = request.form.get('category')
+            details = request.form.get('details')
+            coverurl = request.form.get('coverurl')
+            createarticle = conn.execute("""INSERT INTO articles(name,category,details,coverurl)VALUES (?,?,?,?)""",(name,category,details,coverurl)) 
+            conn.commit()
+            return createarticle
+        
+        return render_template("articleuploader.html")     
+    else:
+        return render_template("login.html") 
+
+@auth.route('/useradd', methods=['GET','POST'])
+def useradd():
+    if "Teacher" in session or "Admin" in session:        
+        database = './website/sqlitedb.db'
+        conn = connect(database)
+        
+        if request.form.get('addarticle') is not None:
+            name = request.form.get('name')
+            password = request.form.get('password')
+            email = request.form.get('email')
+            account = request.form.get('account')
+            createuser = conn.execute("""INSERT INTO users(name,password,email,account)VALUES (?,?,?,?)""",(name, password, email, account,)) 
+            conn.commit()
+            return createuser
+        
+        return render_template("articleuploader.html")     
+    else:
+        return render_template("login.html") 
+
+
+@auth.route('/adminpanel-users')
+def adminpanelusers():
+    if "Admin" in session:        
+        database = './website/sqlitedb.db'
+        conn = connect(database)
+        return render_template("adminpanel-articles.html") 
+    else: 
+        return render_template("login.html")
+@auth.route('/adminpanel-articles')
+
+def adminpanelarticles():
+    if "Admin" in session:        
+        database = './website/sqlitedb.db'
+        conn = connect(database)
+        return render_template("adminpanel-articles.html") 
+    else: 
+        return render_template("login.html") 
