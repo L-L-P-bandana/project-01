@@ -83,6 +83,7 @@ def login():
         existingUserSearchQuery = "SELECT * FROM users WHERE password == 'Student'"
         createUser = conn.execute("""INSERT INTO users(name,password,email,account)VALUES (?,?,?,?)""",(name, password, email, account,)) 
         conn.commit()
+        render_template("login.html") 
         return createUser
     return render_template("login.html") 
 
